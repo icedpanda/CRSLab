@@ -111,7 +111,7 @@ class Config:
             return None
 
     def get(self, item, default=None):
-        """Get value of corrsponding item in config
+        """Get value of corresponding item in config
 
         Args:
             item (str): key to query in config
