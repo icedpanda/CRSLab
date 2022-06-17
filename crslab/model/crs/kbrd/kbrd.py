@@ -219,7 +219,7 @@ class KBRDModel(BaseModel):
             user_logits = self.user_proj_2(torch.relu(self.user_proj_1(user_embedding))).unsqueeze(1)
             sum_logits = token_logits + user_logits
             probs, preds = sum_logits.max(dim=-1)
-            logits.append(scores)
+            logits.append(sum_logits)
             xs = torch.cat([xs, preds], dim=1)
             # check if everyone has generated an end token
             all_finished = ((xs == self.end_token_idx).sum(dim=1) > 0).sum().item() == bsz
