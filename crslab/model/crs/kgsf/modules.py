@@ -125,7 +125,7 @@ class TransformerDecoderKG(nn.Module):
     :param float dropout: Dropout used around embeddings and before layer
         layer normalizations. This is used in Vaswani 2017 and works well on
         large datasets.
-    :param float attention_dropout: Dropout performed after the multhead attention
+    :param float attention_dropout: Dropout performed after the multihead attention
         softmax. This is not used in Vaswani 2017.
     :param float relu_dropout: Dropout used after the ReLU in the FFN. Not used
         in Vaswani 2017, but used in Tensor2Tensor.

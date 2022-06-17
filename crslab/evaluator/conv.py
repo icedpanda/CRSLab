@@ -63,7 +63,8 @@ class ConvEvaluator(BaseEvaluator):
 
             for k in range(1, 5):
                 self.gen_metrics.add(f"bleu@{k}", BleuMetric.compute(hyp, refs, k))
-                for token in ngrams(hyp, k):
+                hyp_token = hyp.split()
+                for token in ngrams(hyp_token, k):
                     self.dist_set[f"dist@{k}"].add(token)
             self.dist_cnt += 1
 

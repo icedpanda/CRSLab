@@ -47,9 +47,9 @@ class TransformerModel(BaseModel):
         n_heads: A integer indicating the number of heads.
         n_layers: A integer indicating the number of layer.
         ffn_size: A integer indicating the size of ffn hidden.
-        dropout: A float indicating the drouput rate.
-        attention_dropout: A integer indicating the drouput rate of attention layer.
-        relu_dropout: A integer indicating the drouput rate of relu layer.
+        dropout: A float indicating the dropout rate.
+        attention_dropout: A integer indicating the dropout rate of attention layer.
+        relu_dropout: A integer indicating the dropout rate of relu layer.
         learn_positional_embeddings: A boolean indicating if we learn the positional embedding.
         embeddings_scale: A boolean indicating if we use the embeddings scale.
         reduction: A boolean indicating if we use the reduction.
