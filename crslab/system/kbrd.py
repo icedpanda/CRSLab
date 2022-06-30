@@ -54,6 +54,7 @@ class KBRDSystem(BaseSystem):
 
     def rec_evaluate(self, rec_predict, item_label):
         rec_predict = rec_predict.cpu()
+        rec_predict = F.log_softmax(rec_predict, dim=1)
         rec_predict = rec_predict[:, self.item_ids]
         _, rec_ranks = torch.topk(rec_predict, 50, dim=-1)
         rec_ranks = rec_ranks.tolist()
