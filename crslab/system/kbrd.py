@@ -10,6 +10,7 @@
 import os
 
 import torch
+import torch.nn.functional as F
 from loguru import logger
 
 from crslab.evaluator.metrics.base import AverageMetric
