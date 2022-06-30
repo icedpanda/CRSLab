@@ -73,6 +73,8 @@ class ConvEvaluator(BaseEvaluator):
             self.gen_metrics.add('greedy', GreedyMatch.compute(hyp_emb, ref_embs))
             self.gen_metrics.add('average', EmbeddingAverage.compute(hyp_emb, ref_embs))
             self.gen_metrics.add('extreme', VectorExtrema.compute(hyp_emb, ref_embs))
+        else:
+            logger.error('No hypothesis generated, count -1')
 
     def report(self, epoch=-1, mode='test'):
         for k, v in self.dist_set.items():
