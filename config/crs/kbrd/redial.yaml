@@ -21,17 +21,26 @@ embeddings_scale: true
 reduction: false
 n_positions: 1024
 user_proj_dim: 512
+seed: 12345
 # optim
 rec:
-  epoch: 10
-  batch_size: 4096
+  epoch: 10      # default is -1, meaning no limit on epochs
+  batch_size: 256 # paper setting
   optimizer:
     name: Adam
     lr: !!float 3e-3
-conv:
-  epoch: 10
-  batch_size: 32
+  lr_scheduler:
+    name: ReduceLROnPlateau
+    patience: 3
+    factor: 0.5
   early_stop: True
+  stop_mode: min
+  impatience: 5 # paper setting
+conv:
+  epoch: 100    # default is -1, meaning no limit on epochs
+  batch_size: 64
+  early_stop: True
+  impatience: 5
   stop_mode: min
   optimizer:
     name: Adam
@@ -40,3 +49,4 @@ conv:
     name: ReduceLROnPlateau
     patience: 3
     factor: 0.5
+gradient_clip: 0.1
