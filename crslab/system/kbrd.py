@@ -72,7 +72,7 @@ class KBRDSystem(BaseSystem):
             p_str = ind2txt(p, self.ind2tok, self.end_token_idx)
             r_str = ind2txt(r, self.ind2tok, self.end_token_idx)
             if write:
-                with open("prediction.json", "a") as f:
+                with open("kbrd_prediction.json", "a") as f:
                     json.dump({"prediction": p_str, "response": r_str}, f)
             self.evaluator.gen_evaluate(p_str, [r_str])
 
@@ -139,9 +139,10 @@ class KBRDSystem(BaseSystem):
     def train_conversation(self):
         if os.environ["CUDA_VISIBLE_DEVICES"] == '-1':
             self.model.freeze_parameters()
+        elif len(os.environ["CUDA_VISIBLE_DEVICES"]) == 1:
+            self.model.freeze_parameters()
         else:
             self.model.module.freeze_parameters()
-        self.init_optim(self.conv_optim_opt, self.model.parameters())
 
         for epoch in range(self.conv_epoch):
             self.evaluator.reset_metrics()
