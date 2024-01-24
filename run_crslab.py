@@ -18,8 +18,9 @@ if __name__ == '__main__':
     # parse args
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', type=str,
-                        default='config/crs/tgredial/tgredial.yaml', help='config file(yaml) path')
-    parser.add_argument('-g', '--gpu', type=str, default='-1',
+                        default='config/crs/kgsf/redial.yaml',
+                        help='config file(yaml) path')
+    parser.add_argument('-g', '--gpu', type=str, default='0',
                         help='specify GPU id(s) to use, we now support multiple GPUs. Defaults to CPU(-1).')
     parser.add_argument('-sd', '--save_data', action='store_true',
                         help='save processed dataset')
@@ -40,5 +41,6 @@ if __name__ == '__main__':
 
     from crslab.quick_start import run_crslab
 
-    run_crslab(config, args.save_data, args.restore_data, args.save_system, args.restore_system, args.interact,
+    run_crslab(config, True, False, args.save_system, False,
+               args.interact,
                args.debug, args.tensorboard)

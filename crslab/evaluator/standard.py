@@ -74,7 +74,6 @@ class StandardEvaluator(BaseEvaluator):
     def gen_evaluate(self, hyp, refs):
         if hyp:
             self.gen_metrics.add("f1", F1Metric.compute(hyp, refs))
-
             for k in range(1, 5):
                 self.gen_metrics.add(f"bleu@{k}", BleuMetric.compute(hyp, refs, k))
                 hyp_token = hyp.split()

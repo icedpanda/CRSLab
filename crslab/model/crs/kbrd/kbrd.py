@@ -124,6 +124,7 @@ class KBRDModel(BaseModel):
         logger.debug('[Build embedding]')
 
     def _build_kg_layer(self):
+        # self.entity_embeds = nn.Embedding(self.n_entity, self.kg_emb_dim)
         self.kg_encoder = RGCNConv(self.n_entity, self.kg_emb_dim, self.n_relation, num_bases=self.num_bases)
         self.kg_attn = SelfAttentionBatch(self.kg_emb_dim, self.kg_emb_dim)
         logger.debug('[Build kg layer]')

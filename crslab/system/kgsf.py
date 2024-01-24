@@ -1,7 +1,7 @@
 # @Time   : 2020/11/22
 # @Author : Kun Zhou
 # @Email  : francis_kun_zhou@163.com
-
+import json
 # UPDATE:
 # @Time   : 2020/11/24, 2021/1/3
 # @Author : Kun Zhou, Xiaolei Wang
@@ -65,12 +65,15 @@ class KGSFSystem(BaseSystem):
             item = self.item_ids.index(item)
             self.evaluator.rec_evaluate(rec_rank, item)
 
-    def conv_evaluate(self, prediction, response):
+    def conv_evaluate(self, prediction, response, write=False):
         prediction = prediction.tolist()
         response = response.tolist()
         for p, r in zip(prediction, response):
             p_str = ind2txt(p, self.ind2tok, self.end_token_idx)
             r_str = ind2txt(r, self.ind2tok, self.end_token_idx)
+            if write:
+                with open("prediction.json", "a") as f:
+                    json.dump({"prediction": p_str, "response": r_str}, f)
             self.evaluator.gen_evaluate(p_str, [r_str])
 
     def step(self, batch, stage, mode):
@@ -108,7 +111,7 @@ class KGSFSystem(BaseSystem):
                 self.evaluator.gen_metrics.add("ppl", PPLMetric(gen_loss))
             else:
                 pred = self.model.forward(batch, stage, mode)
-                self.conv_evaluate(pred, batch[-1])
+                self.conv_evaluate(pred, batch[-1], True)
         else:
             raise
 

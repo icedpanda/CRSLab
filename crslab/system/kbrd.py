@@ -7,6 +7,7 @@
 # @Time    :   2021/1/3
 # @Author  :   Xiaolei Wang
 # @email   :   wxl1999@foxmail.com
+import json
 import os
 
 import torch
@@ -64,12 +65,15 @@ class KBRDSystem(BaseSystem):
             label = self.item_ids.index(label)
             self.evaluator.rec_evaluate(rec_rank, label)
 
-    def conv_evaluate(self, prediction, response):
+    def conv_evaluate(self, prediction, response, write=False):
         prediction = prediction.tolist()
         response = response.tolist()
         for p, r in zip(prediction, response):
             p_str = ind2txt(p, self.ind2tok, self.end_token_idx)
             r_str = ind2txt(r, self.ind2tok, self.end_token_idx)
+            if write:
+                with open("prediction.json", "a") as f:
+                    json.dump({"prediction": p_str, "response": r_str}, f)
             self.evaluator.gen_evaluate(p_str, [r_str])
 
     def step(self, batch, stage, mode):
@@ -101,7 +105,7 @@ class KBRDSystem(BaseSystem):
                 self.evaluator.gen_metrics.add("ppl", PPLMetric(gen_loss))
             else:
                 preds = self.model.forward(batch, mode, stage)
-                self.conv_evaluate(preds, batch['response'])
+                self.conv_evaluate(preds, batch['response'], True)
 
     def train_recommender(self):
         self.init_optim(self.rec_optim_opt, self.model.parameters())
